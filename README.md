@@ -5,7 +5,7 @@ Make clone of project
 run `npm install`  
 run `npm run start:dev` for serve  
 run `npm run test` for test  
-Click here for postman [Documentation](https://documenter.getpostman.com/view/5789604/SVzxagJe?version=latest)
+For more [Documentation](https://documenter.getpostman.com/view/5789604/SVzxagJe?version=latest)
 
 
 # Movies
