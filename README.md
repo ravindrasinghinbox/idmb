@@ -1,10 +1,12 @@
 [![Build status](https://api.travis-ci.org/meseven/node-egitimi-movie-api.svg)](https://travis-ci.org/meseven/node-egitimi-movie-api)
 
 # IDMB
-Make clone of project
-run `npm install`|
-run `npm run start:dev` for serve |
-run `npm run test` for test 
+Make clone of project  
+run `npm install`  
+run `npm run start:dev` for serve  
+run `npm run test` for test  
+Click here for postman [Documentation](https://documenter.getpostman.com/view/5789604/SVzxagJe?version=latest)
+
 
 # Movies
 
