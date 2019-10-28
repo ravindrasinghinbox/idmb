@@ -10,4 +10,4 @@ const MovieGenre = new Schema({
 	}
 });
 
-module.exports = mongoose.model('Movies_Genre', MovieGenre);
+module.exports = mongoose.model('movies_genres', MovieGenre);

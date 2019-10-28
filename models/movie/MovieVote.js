@@ -11,4 +11,4 @@ const MovieVote = new Schema({
 	}
 });
 
-module.exports = mongoose.model('movies_vote', MovieVote);
+module.exports = mongoose.model('movies_votes', MovieVote);

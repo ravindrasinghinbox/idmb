@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const niv = require('../app_modules/node-input-validator');
 
 // Models
 const Genre = require('../models/Genre');
@@ -137,7 +138,7 @@ router.get('/recommended', (req, res) => {
 /**
  * Get Movie by id
  */
-router.get('/:movie_id', (req, res, next) => {
+router.get('/:movie_id', (req, res) => {
 	const promise = Movie.aggregate([
 		{
 			$match: {
@@ -221,7 +222,7 @@ router.get('/:movie_id', (req, res, next) => {
 /**
  * Get Movie by id
  */
-router.get('/review/:movie_id', (req, res, next) => {
+router.get('/review/:movie_id', (req, res) => {
 	const promise = MovieReview.find({ 'movie_id': mongoose.Types.ObjectId(req.params.movie_id) });
 
 	promise.then((movie) => {
@@ -237,7 +238,7 @@ router.get('/review/:movie_id', (req, res, next) => {
 /**
  * Get Movie by id
  */
-router.get('/vote/:movie_id', (req, res, next) => {
+router.get('/vote/:movie_id', (req, res) => {
 	const promise = MovieVote.find({ 'movie_id': mongoose.Types.ObjectId(req.params.movie_id) });
 
 	promise.then((movie) => {
@@ -253,7 +254,14 @@ router.get('/vote/:movie_id', (req, res, next) => {
 /**
  * Vote Movie
  */
-router.post('/vote', (req, res, next) => {
+router.post('/vote',async (req, res) => {
+	const v = new niv.Validator(req.body, {
+		is_like: 'required|boolean',
+		movie_id: 'required|exist:movies,_id,true'
+	});
+	let matched = await v.check();
+	if (!matched) return res.status(422).json(v.errors);
+
 	Movie.findById(req.body.movie_id)
 		.then((movie) => {
 			if (!movie)
@@ -275,7 +283,15 @@ router.post('/vote', (req, res, next) => {
 /**
  * Add or update movie review
  */
-router.post('/review', (req, res, next) => {
+router.post('/review',async (req, res) => {
+	const v = new niv.Validator(req.body, {
+		comment: 'required|string|maxLength:255',
+		rating: 'required|integer|between:1,5',
+		movie_id: 'required|exist:movies,_id,true'
+	});
+	let matched = await v.check();
+	if (!matched) return res.status(422).json(v.errors);
+
 	Movie.findById(req.body.movie_id)
 		.then((movie) => {
 			if (!movie)
@@ -297,7 +313,13 @@ router.post('/review', (req, res, next) => {
 /**
  * Add Favorite movie
  */
-router.post('/favorite', (req, res, next) => {
+router.post('/favorite',async (req, res) => {
+	const v = new niv.Validator(req.body, {
+		movie_id: 'required|exist:movies,_id,true'
+	});
+	let matched = await v.check();
+	if (!matched) return res.status(422).json(v.errors);
+
 	Movie.findById(req.body.movie_id)
 		.then((movie) => {
 			if (!movie)
@@ -334,7 +356,15 @@ async function saveMovie(obj) {
 /**
  * Add Movie
  */
-router.post('/', (req, res, next) => {
+router.post('/',async (req, res) => {
+	const v = new niv.Validator(req.body, {
+		name: 'required|string|maxLength:55',
+		release_date: 'required|datetime|dateAfterToday:0,days',
+		genre: 'required|string|maxLength:55'
+	});
+	let matched = await v.check();
+	if (!matched) return res.status(422).json(v.errors);
+
 	Genre.findOne({ name: req.body.genre }).then((data) => {
 		if (!data) {
 			new Genre({ name: req.body.genre, status: "active" })

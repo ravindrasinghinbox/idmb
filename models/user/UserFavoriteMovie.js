@@ -6,4 +6,4 @@ const UserFavoriteMovie = new Schema({
 	user_id: Object
 });
 
-module.exports = mongoose.model('users_favorite_movie', UserFavoriteMovie);
+module.exports = mongoose.model('users_favorite_movies', UserFavoriteMovie);

@@ -20,4 +20,4 @@ const MovieReview = new Schema({
 	}
 });
 
-module.exports = mongoose.model('movies_review', MovieReview);
+module.exports = mongoose.model('movies_reviews', MovieReview);
