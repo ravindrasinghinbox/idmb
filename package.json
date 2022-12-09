@@ -14,7 +14,7 @@
     "chai-http": "^3.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.1.0",
     "mocha": "^4.1.0",
